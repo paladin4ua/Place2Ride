@@ -1,0 +1,8 @@
+{
+  "name": "PlaceToRide",
+  "app_id": "b354ed16",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}
