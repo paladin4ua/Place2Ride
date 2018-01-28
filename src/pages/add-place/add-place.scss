@@ -1,8 +1,16 @@
 page-add-place {
+
+  map {
+    >div {
+      width:100%;
+      padding-top: 100%;
+    }
+  }
+
+
   .slides ion-slide {
     align-items: initial;
   }
-
 
   input.location {
     background-color: #fff;

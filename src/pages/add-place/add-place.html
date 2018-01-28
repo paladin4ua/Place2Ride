@@ -7,7 +7,10 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>add-place</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Add place</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -45,7 +48,9 @@
     </ion-slide>
 
     <ion-slide>
-      <map #map></map>
+      <div class="map-container">
+        <map #map></map>
+      </div>
       <ion-list no-lines>
         <ion-item>
           <input type="text" name="location" class="location" #location>

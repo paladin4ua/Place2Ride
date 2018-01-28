@@ -7,14 +7,19 @@ export class TimeValidator {
 
     let parsed = moment(input, 'HH:mm');
     if (parsed.isValid()) {
-      return parsed.valueOf() / 1000;
+      return parsed.utc().valueOf();
     }
 
     return null;
   }
 
   static isValid(control: FormControl): any {
-    return TimeValidator.tryParse(control.value) != null;
+    if (!TimeValidator.tryParse(control.value)) {
+      return {
+        invalidTime : true
+      }
+    }
+    return null;
   }
 
   static parse(input: string) : number {

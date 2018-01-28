@@ -2,6 +2,8 @@
 import { NgModule } from '@angular/core';
 import { PlaceService } from "./place";
 import { ImagesService } from "./images";
+import { AuthService } from "./auth";
+import { UsersService } from "./users";
 
 
 @NgModule({
@@ -11,7 +13,9 @@ import { ImagesService } from "./images";
   ],
   providers: [
     PlaceService,
-    ImagesService
+    ImagesService,
+    AuthService,
+    UsersService,
   ]
 })
 export class ServicesModule {}

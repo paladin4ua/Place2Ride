@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFirestoreModule } from 'angularfire2/firestore';
-
+import { Facebook } from '@ionic-native/facebook';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -17,6 +17,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ServicesModule } from "../services/services.module";
 import { ComponentsModule } from "../components/components.module";
 import { ViewPlacePageModule } from "../pages/view-place/view-place.module";
+import { AngularFireDatabaseModule } from "angularfire2/database-deprecated";
+import { LoginPageModule } from "../pages/login/login.module";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBq3Swf88Mt28PwjeUbf4xStxz5hQUv1OQ",
@@ -40,9 +42,11 @@ export const firebaseConfig = {
     AngularFireAuthModule,
     AddPlacePageModule,
     ViewPlacePageModule,
+    LoginPageModule,
     ComponentsModule,
     ServicesModule,
     AngularFirestoreModule,
+    AngularFireDatabaseModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -53,6 +57,7 @@ export const firebaseConfig = {
   providers: [
     StatusBar,
     SplashScreen,
+    Facebook,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

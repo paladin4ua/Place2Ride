@@ -6,6 +6,8 @@ import {TimeValidator} from "../../validators/TimeValidator";
 import {PlaceService} from "../../services/place";
 import {MapComponent} from "../../components/map/map";
 import {ViewPlacePage} from "../view-place/view-place";
+import { AuthService } from "../../services/auth";
+import { LoginPage } from "../login/login";
 
 /**
  * Generated class for the AddPlacePage page.
@@ -33,7 +35,9 @@ export class AddPlacePage {
               public navParams: NavParams,
               private formBuilder: FormBuilder,
               private placeService: PlaceService,
+              private authService: AuthService,
               private zone: NgZone) {
+
     this.addForm = this.formBuilder.group({
       name: ['', Validators.required],
       description: ['', Validators.required],
@@ -43,6 +47,9 @@ export class AddPlacePage {
   }
 
   ionViewDidLoad() {
+
+
+
     let autocomplete =  new google.maps.places.Autocomplete((this.locationInput.nativeElement), {types: ['geocode']});
 
     autocomplete.addListener("place_changed", () => {
@@ -54,10 +61,18 @@ export class AddPlacePage {
         this.place.longitude = coord.lng();
         this.place.address = autocomplete.getPlace().formatted_address;
 
-        this.map.addPlaceMarker(coord);
+        this.map.addPlaceMarker({
+          coord:coord
+        });
 
       })
     });
+  }
+
+  ionViewWillEnter() {
+    if (!this.authService.isUserSignedIn()) {
+      this.navCtrl.push(LoginPage);
+    }
   }
 
 

@@ -3,6 +3,7 @@ import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
 export class MarkerInfo {
   id? : any;
   coord:  google.maps.LatLng;
+  onClick?: () => void;
 }
 
 
@@ -15,7 +16,7 @@ export class MapComponent implements AfterViewInit{
   @ViewChild('mapContainer') mapContainer: ElementRef;
   private map : google.maps.Map;
 
-  private addedMarkers : {[id: string]: any};
+  private addedMarkers : {[id: string]: any} = {};
 
   constructor() {
   }
@@ -35,6 +36,16 @@ export class MapComponent implements AfterViewInit{
     this.map = new google.maps.Map(this.mapContainer.nativeElement, mapOptions);
   }
 
+  onBoundsChanged(callback:(bounds: google.maps.LatLngBounds) => void ) {
+    google.maps.event.addListener(this.map, 'bounds_changed', () => {
+      callback(this.map.getBounds());
+    });
+  }
+
+  getBounds() {
+    return this.map.getBounds();
+  }
+
   addPlaceMarker( markerInfo : MarkerInfo) {
 
     let marker = new google.maps.Marker({
@@ -43,8 +54,28 @@ export class MapComponent implements AfterViewInit{
       position: markerInfo.coord
     });
 
+    if (markerInfo.onClick) {
+      marker.addListener('click', markerInfo.onClick);
+    }
+
     if (markerInfo.id) {
       this.addedMarkers[markerInfo.id] = marker;
     }
   }
+
+  moveMarker(id : any, location:  google.maps.LatLng) {
+
+    let marker = this.addedMarkers[id];
+    if (marker) {
+      marker.setPosition(location);
+    }
+  }
+
+  removeMarker(id: any) {
+    let marker = this.addedMarkers[id];
+    if (marker) {
+      marker.setMap(null);
+    }
+  }
+
 }

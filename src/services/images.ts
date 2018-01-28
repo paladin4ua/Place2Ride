@@ -1,20 +1,25 @@
 
 import {Injectable} from "@angular/core";
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestoreCollection } from 'angularfire2/firestore';
 import { UploadedImage } from "../models/uploaded-file";
+import { FirebaseApp } from "angularfire2";
+import * as firebase from "firebase";
+import { FirebaseUtils } from "./firebase-utils";
 
 @Injectable()
 export class ImagesService {
 
-  constructor(private firestore: AngularFirestore) {
+  constructor(private firebaseApp: FirebaseApp) {
   }
 
-  addImageTo(collection : AngularFirestoreCollection<any>, imageFile : File) :Promise<UploadedImage> {
+  addImageTo(collection : AngularFirestoreCollection<UploadedImage>, imageFile : File) :Promise<UploadedImage> {
 
     let promiss = new Promise<UploadedImage>((resolve, reject) => {
 
-      collection.add({}).then((imgDocRef) => {
-        let storageRef = firebase.storage().ref();
+      let image = new UploadedImage();
+
+      collection.add(FirebaseUtils.mapToObject(image)).then((imgDocRef) => {
+        let storageRef = this.firebaseApp.storage().ref();
         let uploadTask = storageRef.child(`images/places/${imgDocRef.id}`).put(imageFile);
 
         uploadTask.on(firebase.storage.TaskEvent.STATE_CHANGED,

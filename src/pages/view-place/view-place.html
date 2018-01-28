@@ -7,33 +7,60 @@
 <ion-header>
 
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>{{place.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <ion-slides #addWizardSlider >
-    <ion-slide *ngFor="let image of uploadedImages" >
-      <div>
-        <img [src]="image.url" />
-      </div>
+  <div class="slides-wrapper">
 
-      <ion-fab bottom right edge>
-        <button ion-fab mini><ion-icon name="add"></ion-icon></button>
-      </ion-fab>
+    <ion-slides #images >
+      <ion-slide *ngFor="let image of uploadedImages" >
 
-    </ion-slide>
+        <div *ngIf="!image.url" class="button-wrapper">
+          <div>
+            <ion-spinner></ion-spinner>
+          </div>
+        </div>
 
-    <ion-slide *ngIf="!uploadedImages.length">
-      No images, please upload
-    </ion-slide>
+        <div *ngIf="image.url" class="img-wrapper">
+          <img [src]="image.url" />
+        </div>
 
-  </ion-slides>
+      </ion-slide>
 
-  <ion-list>
+      <ion-slide *ngIf="!uploadedImages && authService.isAdminSignedIn()">
+
+        <div class="button-wrapper">
+          <div>
+            <ion-spinner></ion-spinner>
+          </div>
+        </div>
+
+      </ion-slide>
+
+      <ion-slide *ngIf="uploadedImages && !uploadedImages.length && authService.isAdminSignedIn()">
+
+        <div class="button-wrapper">
+          <div>
+            <button ion-button (click)="fileUpload.click()">No images, please upload</button>
+          </div>
+        </div>
+
+      </ion-slide>
+    </ion-slides>
+
+    <ion-fab bottom right edge *ngIf="authService.isAdminSignedIn()">
+      <button ion-fab (click)="fileUpload.click()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+  </div>
+  <ion-list padding>
 
     <ion-item>
       {{place.description}}
@@ -46,21 +73,20 @@
     <ion-item>
       <ion-icon name='time' item-start></ion-icon>
       Open time
-      <ion-note item-end>{{place.openTime}}</ion-note>
+      <ion-note item-end>{{place.openTime | amDateFormat:'HH:mm'}}</ion-note>
     </ion-item>
 
     <ion-item>
       <ion-icon name='time' item-start></ion-icon>
       Close time
-      <ion-note item-end>{{place.closeTime}}</ion-note>
+      <ion-note item-end>{{place.closeTime | amDateFormat:'HH:mm'}}</ion-note>
     </ion-item>
 
   </ion-list>
 
 
-  <form ng-submit="uploadFile()">
-    <input type="file" (change)="imageChange($event)" name="file" />
-  </form>
+  <input type="file" (change)="imageChange($event)" name="file" #fileUpload accept="image/*"  />
+
 
 
 </ion-content>

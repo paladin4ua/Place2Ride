@@ -2,11 +2,14 @@ import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
-import { AngularFireAuth } from 'angularfire2/auth';
+
 
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { AddPlacePage } from "../pages/add-place/add-place";
+import { LoginPage } from "../pages/login/login";
+import { AuthService } from "../services/auth";
+import { User } from "../models/user";
 
 
 @Component({
@@ -16,18 +19,15 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   rootPage: any = HomePage;
+  user: User;
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public afAuth: AngularFireAuth) {
+  constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public authService: AuthService) {
     this.initializeApp();
 
-    this.afAuth.authState.subscribe(res => {
-      if (res && res.uid) {
-        console.log('user is logged in');
-      } else {
-        console.log('user not logged in');
-      }
+    this.authService.authState().subscribe(user => {
+      this.user = user;
     });
 
     // used for an example of ngFor and navigation
@@ -48,9 +48,16 @@ export class MyApp {
     });
   }
 
+
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+  }
+
+  login() {
+    this.nav.push(LoginPage);
+  }
+
+  logout() {
+    this.authService.signOut();
   }
 }

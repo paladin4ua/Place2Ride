@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
-import { AlertController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { AlertController, IonicPage, NavController, NavParams, Slides } from 'ionic-angular';
 import {PlaceService} from "../../services/place";
 import {Place} from "../../models/place";
 import { UploadedImage } from "../../models/uploaded-file";
 import { ImagesService } from "../../services/images";
+import { AuthService } from "../../services/auth";
 
 /**
  * Generated class for the ViewPlacePage page.
@@ -20,22 +21,29 @@ import { ImagesService } from "../../services/images";
 })
 export class ViewPlacePage {
 
+  @ViewChild(Slides) images: Slides;
+
   private place: Place = new Place();
   private placeId: string;
-  private uploadedImages : UploadedImage[] = [];
+  private uploadedImages : UploadedImage[] = null;
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
+              public authService: AuthService,
               private placeService: PlaceService,
               private imagesService: ImagesService,
               private alertCtrl: AlertController) {
     this.placeId = navParams.get('placeId');
-    placeService.getPlace(this.placeId).then(
+    placeService.getPlace(this.placeId).subscribe(
       (place) => this.place = place
     );
   }
 
   ionViewDidLoad() {
+    this.placeService.getPlaceImages(this.placeId).subscribe(uploadedImages => {
+      this.uploadedImages = uploadedImages;
+      this.images.slideTo(this.uploadedImages.length - 1);
+    });
   }
 
   imageChange(event) {
@@ -46,15 +54,16 @@ export class ViewPlacePage {
 
       this.imagesService.addImageTo(
         this.placeService.placeImagesCollection(this.placeId), file).then(
-          (image) => this.uploadedImages.push(image)
+          () => {}
         ).catch(
-          () => this.showError()
+          (err) => this.showError(err)
         );
 
     }
   }
 
-  showError() {
+  showError(err) {
+    console.log(err);
     let alert = this.alertCtrl.create({
       title: 'Upload upload',
       subTitle: 'Image upload failed',
