@@ -9,6 +9,8 @@ import * as GeoFire from "geofire";
 import { Observable } from "rxjs/Rx";
 
 import { take } from 'rxjs/operators'
+import {User} from "../models/user";
+import {Rating} from "../models/rating";
 
 
 export class PlacesGeoQuery {
@@ -96,6 +98,10 @@ export class PlaceService {
     return this.placeDoc(placeId).collection('images', queryFn);
   }
 
+  public placeRatingsCollection(placeId, queryFn?: QueryFn): AngularFirestoreCollection<Rating> {
+    return this.placeDoc(placeId).collection('ratings', queryFn);
+  }
+
   public getPlaceImages(placeId) : Observable<UploadedImage[]> {
     return this.placeImagesCollection(placeId, ref => ref.orderBy('createdAt')).snapshotChanges().map(actions => {
       return actions.map(a => {
@@ -124,5 +130,16 @@ export class PlaceService {
     return new PlacesGeoQuery(this.geoFire, this, bounds);
   }
 
+  ratePlace(placeId: string, userId: string, user: User, rating: number, comment: string) {
+
+    let ratingDoc = {
+      comment: comment ? comment : null,
+      rating: rating,
+      photoURL: user.photoURL ? user.photoURL : null,
+      displayName: user.displayName ? user.displayName : null,
+    } as Rating;
+
+    return this.placeRatingsCollection(placeId).doc(userId).set(ratingDoc);
+  }
 
 }

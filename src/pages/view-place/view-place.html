@@ -60,6 +60,9 @@
       <button ion-fab (click)="fileUpload.click()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
   </div>
+  <div (click)="addReview()">
+    <rating [(ngModel)]="place.avarageRaiting" readOnly="true"></rating> {{place.numberRaitings ? place.numberRaitings + 'Reviews': 'No reviews yet'}}
+  </div>
   <ion-list padding>
 
     <ion-item>

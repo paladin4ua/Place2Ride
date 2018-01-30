@@ -5,6 +5,7 @@ import {Place} from "../../models/place";
 import { UploadedImage } from "../../models/uploaded-file";
 import { ImagesService } from "../../services/images";
 import { AuthService } from "../../services/auth";
+import {AddReviewPage} from "../add-review/add-review";
 
 /**
  * Generated class for the ViewPlacePage page.
@@ -60,6 +61,10 @@ export class ViewPlacePage {
         );
 
     }
+  }
+
+  addReview(){
+    this.navCtrl.push(AddReviewPage, {placeId: this.placeId});
   }
 
   showError(err) {

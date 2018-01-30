@@ -1,17 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { ViewPlacePage } from './view-place';
-import { MomentModule } from 'angular2-moment';
+import { AddReviewPage } from './add-review';
 import {Ionic2RatingModule} from "ionic2-rating";
 
 @NgModule({
   declarations: [
-    ViewPlacePage,
+    AddReviewPage,
   ],
   imports: [
-    IonicPageModule.forChild(ViewPlacePage),
+    IonicPageModule.forChild(AddReviewPage),
     Ionic2RatingModule,
-    MomentModule,
   ],
 })
-export class ViewPlacePageModule {}
+export class AddReviewPageModule {}

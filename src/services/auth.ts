@@ -5,11 +5,13 @@ import { AngularFireAuth } from "angularfire2/auth";
 import { Observable } from "rxjs/Observable";
 import { UsersService } from "./users";
 import { flatMap } from "rxjs/operators"
+import { empty } from "rxjs/observable/empty";
 
 @Injectable()
 export class AuthService {
 
   private signedInUser: User = null;
+  private signedInUserId: string = null;
 
   isUserSignedIn() {
     return !!this.signedInUser;
@@ -17,6 +19,10 @@ export class AuthService {
 
   getSignedInUser() {
     return this.signedInUser;
+  }
+
+  getSignedInUserId() {
+    return this.signedInUserId;
   }
 
   isAdminSignedIn() {
@@ -53,9 +59,10 @@ export class AuthService {
   authState(): Observable<User> {
     return this.angularFireAuth.authState.pipe( flatMap((fireUser) => {
       if (fireUser && fireUser.uid) {
+        this.signedInUserId = fireUser.uid;
         return this.usersService.getUser(fireUser.uid);
       } else {
-        return null;
+        return empty();
       }
     }));
   }
