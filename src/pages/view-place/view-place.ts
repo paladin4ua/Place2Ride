@@ -6,6 +6,7 @@ import { UploadedImage } from "../../models/uploaded-file";
 import { ImagesService } from "../../services/images";
 import { AuthService } from "../../services/auth";
 import {AddReviewPage} from "../add-review/add-review";
+import { PageUtils } from "../utils";
 
 /**
  * Generated class for the ViewPlacePage page.
@@ -26,14 +27,15 @@ export class ViewPlacePage {
 
   private place: Place = new Place();
   private placeId: string;
-  private uploadedImages : UploadedImage[] = null;
+  private uploadedImages : UploadedImage[] = [];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
               public authService: AuthService,
               private placeService: PlaceService,
               private imagesService: ImagesService,
-              private alertCtrl: AlertController) {
+              private alertCtrl: AlertController,
+              private pageUtils: PageUtils) {
     this.placeId = navParams.get('placeId');
     placeService.getPlace(this.placeId).subscribe(
       (place) => this.place = place
@@ -43,7 +45,6 @@ export class ViewPlacePage {
   ionViewDidLoad() {
     this.placeService.getPlaceImages(this.placeId).subscribe(uploadedImages => {
       this.uploadedImages = uploadedImages;
-      this.images.slideTo(this.uploadedImages.length - 1);
     });
   }
 
@@ -64,7 +65,9 @@ export class ViewPlacePage {
   }
 
   addReview(){
-    this.navCtrl.push(AddReviewPage, {placeId: this.placeId});
+
+    this.pageUtils.verifyAuthAndPush(this.navCtrl, AddReviewPage, {placeId: this.placeId});
+
   }
 
   showError(err) {

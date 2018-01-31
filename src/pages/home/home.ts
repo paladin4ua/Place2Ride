@@ -33,6 +33,7 @@ export class HomePage {
       this.map.addPlaceMarker({
         id: placeId,
         coord: location,
+        label: place.name,
         onClick: () => {
           this.navCtrl.push(ViewPlacePage, {placeId: placeId});
         }

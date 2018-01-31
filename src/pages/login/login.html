@@ -10,7 +10,10 @@
 
 <ion-content padding>
 
-  <form (ngSubmit)="loginEmail()" #registerForm="ngForm">
+  <h1>Welcome to Bike Repair</h1>
+  <p> Please login  to continue</p>
+
+  <form (ngSubmit)="loginEmail()" #registerForm="ngForm" *ngIf="!platform.is('mobile')">
     <ion-row>
       <ion-col>
         <ion-list inset>
@@ -34,9 +37,7 @@
   </form>
 
 
-  <button ion-button icon-right (click)="loginFb()">
-    Login with
-    <ion-icon name="logo-facebook"></ion-icon>
-  </button>
+  <button ion-button block (click)="loginFb()" color="facebook" *ngIf="platform.is('mobile')"><span class="facebook"></span>Login with Facebook</button>
 
+  <!--<ion-icon name="logo-facebook"></ion-icon> -->
 </ion-content>

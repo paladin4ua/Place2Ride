@@ -1,8 +1,10 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
+import * as MapLabel from "../../3d-party/maplabel";
 
 export class MarkerInfo {
   id? : any;
   coord:  google.maps.LatLng;
+  label?: string;
   onClick?: () => void;
 }
 
@@ -19,6 +21,7 @@ export class MapComponent implements AfterViewInit{
   private addedMarkers : {[id: string]: any} = {};
 
   constructor() {
+
   }
 
   ngAfterViewInit() {
@@ -52,6 +55,14 @@ export class MapComponent implements AfterViewInit{
       map: this.map,
       animation: google.maps.Animation.DROP,
       position: markerInfo.coord
+    });
+
+    new MapLabel.MapLabel({
+      text: markerInfo.label,
+      position: markerInfo.coord,
+      map: this.map,
+      fontSize: 12,
+      fontColor: 'red'
     });
 
     if (markerInfo.onClick) {

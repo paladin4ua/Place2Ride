@@ -21,7 +21,7 @@ export class MyApp {
   rootPage: any = HomePage;
   user: User;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{title: string, component: any, show?: ()=> boolean}>;
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen, public authService: AuthService) {
     this.initializeApp();
@@ -32,9 +32,8 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Home', component: HomePage },
-      { title: 'List', component: ListPage },
-      { title: 'Add Place', component: AddPlacePage }
+      { title: 'Map', component: HomePage, show: ()=> true },
+      { title: 'Add Place', component: AddPlacePage, show: ()=> this.authService.getSignedInUser() && this.authService.getSignedInUser().isAdmin }
     ];
 
   }

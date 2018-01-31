@@ -30,11 +30,20 @@ export class LoginPage {
   }
 
 
+  onLoggedIn() {
+    this.navCtrl.pop().then(() => {
+      var onSuccess = this.navParams.get('onSuccess');
+      if (onSuccess) {
+        onSuccess();
+      }
+    });
+  }
+
   loginEmail() {
 
 
     this.authService.adminLogin(this.email, this.password)
-      .then(() => this.navCtrl.pop())
+      .then(() => this.onLoggedIn())
       .catch((err) => {
         let alert = this.alertCtrl.create({
           message: err.message,
@@ -56,7 +65,7 @@ export class LoginPage {
         const facebookCredential = firebase.auth.FacebookAuthProvider
           .credential(response.authResponse.accessToken);
 
-          this.authService.login(facebookCredential).then(() => this.navCtrl.pop())
+          this.authService.login(facebookCredential).then(() => this.onLoggedIn())
           .catch((err) => {
             let alert = this.alertCtrl.create({
               message: err.message,

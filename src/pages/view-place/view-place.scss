@@ -13,7 +13,7 @@ page-view-place {
   .slides-wrapper:after {
     content: "";
     display: block;
-    padding-bottom: 100%;
+    padding-bottom: 66.666666%;
   }
 
   .slides-wrapper ion-slides {
@@ -58,6 +58,7 @@ page-view-place {
 
   ul {
     padding: 0px;
+    margin:  0px;
     display: inline-block;
 
     &.rating li {
@@ -66,7 +67,7 @@ page-view-place {
       color: #ffb400;
 
       ion-icon {
-        font-size: 20px;
+        font-size: 30px;
       }
     }
   }

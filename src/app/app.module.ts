@@ -19,8 +19,8 @@ import { ComponentsModule } from "../components/components.module";
 import { ViewPlacePageModule } from "../pages/view-place/view-place.module";
 import { AngularFireDatabaseModule } from "angularfire2/database-deprecated";
 import { LoginPageModule } from "../pages/login/login.module";
-import {AddReviewPage} from "../pages/add-review/add-review";
-import {AddReviewPageModule} from "../pages/add-review/add-review.module";
+import { AddReviewPageModule } from "../pages/add-review/add-review.module";
+import { PageUtils } from "../pages/utils";
 
 export const firebaseConfig = {
   apiKey: "AIzaSyBq3Swf88Mt28PwjeUbf4xStxz5hQUv1OQ",
@@ -61,6 +61,7 @@ export const firebaseConfig = {
     StatusBar,
     SplashScreen,
     Facebook,
+    PageUtils,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
