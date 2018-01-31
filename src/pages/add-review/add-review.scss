@@ -1,0 +1,24 @@
+page-add-review {
+  ul {
+    padding: 0px;
+    padding-left: 32px;
+    display: inline-block;
+
+    &.rating li {
+      padding: 0px !important;
+      background: none;
+      color: #ffb400;
+
+      ion-icon {
+        font-size: 30px;
+      }
+    }
+  }
+
+  div.rate {
+    padding-left: 40px;
+    >ion-item {
+      padding-left: 26px;
+    }
+  }
+}

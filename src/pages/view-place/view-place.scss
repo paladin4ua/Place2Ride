@@ -7,6 +7,7 @@ page-view-place {
   .slides-wrapper {
     position: relative;
     width: 100%;
+    max-width: 500px;
   }
 
   .slides-wrapper:after {
@@ -53,5 +54,20 @@ page-view-place {
 
   input[type=file] {
     display: none;
+  }
+
+  ul {
+    padding: 0px;
+    display: inline-block;
+
+    &.rating li {
+      padding: 0px !important;
+      background: none;
+      color: #ffb400;
+
+      ion-icon {
+        font-size: 20px;
+      }
+    }
   }
 }
