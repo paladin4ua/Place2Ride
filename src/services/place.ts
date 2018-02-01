@@ -137,9 +137,14 @@ export class PlaceService {
       rating: rating,
       photoURL: user.photoURL ? user.photoURL : null,
       displayName: user.displayName ? user.displayName : null,
+      createdAt: new Date(),
     } as Rating;
 
     return this.placeRatingsCollection(placeId).doc(userId).set(ratingDoc);
+  }
+
+  getPlaceRatings(placeId: string) {
+    return this.placeRatingsCollection(placeId).valueChanges();
   }
 
 }

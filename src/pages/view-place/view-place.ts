@@ -7,6 +7,7 @@ import { ImagesService } from "../../services/images";
 import { AuthService } from "../../services/auth";
 import {AddReviewPage} from "../add-review/add-review";
 import { PageUtils } from "../utils";
+import { Rating } from "../../models/rating";
 
 /**
  * Generated class for the ViewPlacePage page.
@@ -28,6 +29,7 @@ export class ViewPlacePage {
   private place: Place = new Place();
   private placeId: string;
   private uploadedImages : UploadedImage[] = [];
+  private ratings : Rating[] = [];
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
@@ -45,6 +47,10 @@ export class ViewPlacePage {
   ionViewDidLoad() {
     this.placeService.getPlaceImages(this.placeId).subscribe(uploadedImages => {
       this.uploadedImages = uploadedImages;
+    });
+
+    this.placeService.getPlaceRatings(this.placeId).subscribe(ratings => {
+      this.ratings = ratings;
     });
   }
 

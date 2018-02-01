@@ -17,8 +17,8 @@ export class Place {
 
   closeTime : number;
 
-  avarageRaiting?: number;
-  numberRaitings?: number;
+  averageRating?: number;
+  numberRatings?: number;
 
 
   createdAt: firebase.firestore.FieldValue = FirebaseUtils.serverTimestamp();

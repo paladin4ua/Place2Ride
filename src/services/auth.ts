@@ -62,7 +62,7 @@ export class AuthService {
         this.signedInUserId = fireUser.uid;
         return this.usersService.getUser(fireUser.uid);
       } else {
-        return empty();
+        return Observable.of(null);
       }
     }));
   }

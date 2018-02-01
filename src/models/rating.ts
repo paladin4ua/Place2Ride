@@ -5,4 +5,5 @@ export class Rating {
   rating: number;
   photoURL?: string;
   displayName?: string;
+  createdAt: Date;
 }
