@@ -204,5 +204,3 @@ MapLabel.prototype.onRemove = function() {
   }
 };
 MapLabel.prototype['onRemove'] = MapLabel.prototype.onRemove;
-
-exports.MapLabel = MapLabel;

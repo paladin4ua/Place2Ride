@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, ElementRef, ViewChild} from '@angular/core';
-import * as MapLabel from "../../3d-party/maplabel";
 
 export class MarkerInfo {
   id? : any;
@@ -8,6 +7,7 @@ export class MarkerInfo {
   onClick?: () => void;
 }
 
+declare var MapLabel: any;
 
 @Component({
   selector: 'map',
@@ -57,7 +57,7 @@ export class MapComponent implements AfterViewInit{
       position: markerInfo.coord
     });
 
-    new MapLabel.MapLabel({
+    new MapLabel({
       text: markerInfo.label,
       position: markerInfo.coord,
       map: this.map,
