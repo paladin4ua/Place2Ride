@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, PopoverController } from 'ionic-angular';
 import { PlaceService, PlacesGeoQuery } from "../../services/place";
 import { MapComponent } from "../../components/map/map";
 import { ViewPlacePage } from "../view-place/view-place";
@@ -13,7 +13,7 @@ export class HomePage {
   @ViewChild('map') map: MapComponent;
   private placesGeoQuery : PlacesGeoQuery;
 
-  constructor(public navCtrl: NavController, private placeService: PlaceService) {
+  constructor(public navCtrl: NavController, private placeService: PlaceService, private popoverCtrl: PopoverController) {
   }
 
   ionViewDidLoad() {
@@ -55,6 +55,17 @@ export class HomePage {
     if (this.placesGeoQuery) {
       this.placesGeoQuery.cancel();
     }
+  }
+
+  presentRadioPopover(ev: UIEvent) {
+    let popover = this.popoverCtrl.create(PageTwo, {
+      contentEle: this.content.nativeElement,
+      textEle: this.text.nativeElement
+    });
+
+    popover.present({
+      ev: ev
+    });
   }
 
 }

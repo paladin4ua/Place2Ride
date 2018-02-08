@@ -1,9 +1,19 @@
 
 import { FirebaseUtils } from "../services/firebase-utils";
 
+enum PlaceType {
+  Store = 'store',
+  Workshop = 'workshop',
+  Both = 'both'
+}
+
 export class Place {
 
   name : string;
+
+  type: PlaceType;
+
+  categories: string[];
 
   description : string;
 
