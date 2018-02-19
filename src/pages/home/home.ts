@@ -57,7 +57,7 @@ export class HomePage {
     }
   }
 
-  presentRadioPopover(ev: UIEvent) {
+  /*presentRadioPopover(ev: UIEvent) {
     let popover = this.popoverCtrl.create(PageTwo, {
       contentEle: this.content.nativeElement,
       textEle: this.text.nativeElement
@@ -66,6 +66,6 @@ export class HomePage {
     popover.present({
       ev: ev
     });
-  }
+  }*/
 
 }
