@@ -5,7 +5,7 @@ export class MarkerInfo {
   coord:  google.maps.LatLng;
   label?: string;
   onClick?: () => void;
-  categories: string[];
+  categories?: string[];
 }
 
 class AddedMarker {
