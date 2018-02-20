@@ -5,6 +5,12 @@ export class MarkerInfo {
   coord:  google.maps.LatLng;
   label?: string;
   onClick?: () => void;
+  categories?: string[];
+}
+
+class AddedMarker {
+  gmapMarker: any;
+  categories: string[];
 }
 
 declare var MapLabel: any;
@@ -18,7 +24,7 @@ export class MapComponent implements AfterViewInit{
   @ViewChild('mapContainer') mapContainer: ElementRef;
   private map : google.maps.Map;
 
-  private addedMarkers : {[id: string]: any} = {};
+  private addedMarkers : {[id: string]: AddedMarker} = {};
 
   constructor() {
 
@@ -70,7 +76,10 @@ export class MapComponent implements AfterViewInit{
     }
 
     if (markerInfo.id) {
-      this.addedMarkers[markerInfo.id] = marker;
+      this.addedMarkers[markerInfo.id] = {
+        gmapMarker : marker,
+        categories: markerInfo.categories
+      };
     }
   }
 
@@ -78,14 +87,31 @@ export class MapComponent implements AfterViewInit{
 
     let marker = this.addedMarkers[id];
     if (marker) {
-      marker.setPosition(location);
+      marker.gmapMarker.setPosition(location);
     }
   }
 
   removeMarker(id: any) {
     let marker = this.addedMarkers[id];
     if (marker) {
-      marker.setMap(null);
+      marker.gmapMarker.setMap(null);
+    }
+  }
+
+  filterMarkersByCategories(filterBy: string[]) {
+    for (let id in this.addedMarkers) {
+      let marker = this.addedMarkers[id];
+
+      let hasCategories = true;
+
+      filterBy.forEach(filterCat => {
+        if (!marker.categories.find( cat => cat == filterCat )) {
+          hasCategories = false;
+        }
+      });
+
+      marker.gmapMarker.setVisible(hasCategories);
+
     }
   }
 

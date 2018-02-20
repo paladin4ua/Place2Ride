@@ -89,6 +89,7 @@
         <variable name="APP_ID" value="394076974369196" />
         <variable name="APP_NAME" value="PlaceToRide" />
     </plugin>
-    <engine name="android" spec="~7.0.0" />
+    <engine name="android" spec="~7.0.0" />ionu
     <allow-navigation href="http://192.168.1.3:8100" />
+    <engine name="ios" spec="4.5.4" />
 </widget>

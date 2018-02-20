@@ -39,7 +39,9 @@ export const firebaseConfig = {
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp, {
+      mode: 'md'
+    }),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AddPlacePageModule,
