@@ -26,7 +26,9 @@ export class PlacesGeoQuery {
     return this.geoQuery.on('key_entered', (key, location, distance) => {
 
       this.placeService.getPlace(key).pipe( take(1))
-        .subscribe((place) => callback(key, new google.maps.LatLng(location[0], location[1]), place));
+        .subscribe((place) => {
+        callback(key, new google.maps.LatLng(location[0], location[1]), place)
+      });
 
     });
 

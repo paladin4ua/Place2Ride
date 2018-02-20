@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { Loading, LoadingController, NavController } from 'ionic-angular';
 import { PlaceService, PlacesGeoQuery } from "../../services/place";
 import { MapComponent } from "../../components/map/map";
 import { ViewPlacePage } from "../view-place/view-place";
@@ -13,12 +13,21 @@ export class HomePage {
   @ViewChild('map') map: MapComponent;
   private placesGeoQuery : PlacesGeoQuery;
 
-  constructor(public navCtrl: NavController, private placeService: PlaceService) {
-  }
+  private startTime = new Date();
+  private loader : Loading = null;
 
+  constructor(public navCtrl: NavController, private placeService: PlaceService, public loadingCtrl: LoadingController) {
+  }
   ionViewDidLoad() {
 
+    this.loader = this.loadingCtrl.create({
+      content:"Loading..."
+    });
+
+    this.loader.present();
+
     this.map.onBoundsChanged((bounds) => {
+
       if (!this.placesGeoQuery) {
         this.placesGeoQuery = this.createGeoQuery(bounds);
       } else {
@@ -30,6 +39,12 @@ export class HomePage {
   private createGeoQuery(bounds) {
     let placesGeoQuery = this.placeService.createPlaceQuery(bounds);
     placesGeoQuery.onPlaceEnter((placeId, location, place) => {
+
+      if (this.loader) {
+        this.loader.dismiss();
+        this.loader = null;
+      }
+
       this.map.addPlaceMarker({
         id: placeId,
         coord: location,

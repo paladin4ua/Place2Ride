@@ -1,5 +1,5 @@
 page-login {
-  h1, p {
+  h1, h3, p {
 
     text-align: center;
   }
@@ -12,8 +12,12 @@ page-login {
     height: 45px !important;
   }
 
+  form {
+    padding-top: 40px;
+  }
+
   .facebook {
-    background-image: url('../../assets/imgs/facebook.png');
+    background-image: url('../assets/imgs/facebook.png');
   }
 
   .facebook {

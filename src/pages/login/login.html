@@ -13,9 +13,13 @@
   <h1>Welcome to Bike Repair</h1>
   <p> Please login  to continue</p>
 
-  <form (ngSubmit)="loginEmail()" #registerForm="ngForm" *ngIf="!platform.is('mobile')">
+  <button ion-button block (click)="loginFb()" color="facebook" ><span class="facebook"></span>Login with Facebook</button>
+
+
+  <form (ngSubmit)="loginEmail()" #registerForm="ngForm" >
     <ion-row>
       <ion-col>
+        <h3> Admin login</h3>
         <ion-list inset>
 
           <ion-item>
@@ -31,13 +35,10 @@
     </ion-row>
 
     <ion-row>
-        <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
+      <button ion-button class="submit-btn" full type="submit" [disabled]="!registerForm.form.valid">Login</button>
     </ion-row>
 
   </form>
-
-
-  <button ion-button block (click)="loginFb()" color="facebook" *ngIf="platform.is('mobile')"><span class="facebook"></span>Login with Facebook</button>
 
   <!--<ion-icon name="logo-facebook"></ion-icon> -->
 </ion-content>
